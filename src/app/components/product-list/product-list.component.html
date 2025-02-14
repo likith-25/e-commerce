@@ -1,0 +1,36 @@
+<button (click)="toggleView('table')">Table View</button>
+<button (click)="toggleView('card')">Card View</button>
+
+<div *ngIf="viewMode === 'table'">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let product of products; let i = index">
+      <td>{{ product.name }}</td>
+      <td>{{ product.type }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.stock }}</td>
+      <td>
+        <button (click)="editProduct.emit(i)">Edit</button>
+        <button (click)="deleteProduct.emit(i)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="viewMode === 'card'">
+  <div *ngFor="let product of products; let i = index" class="card">
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p><strong>Type:</strong> {{ product.type }}</p>
+    <p><strong>Price:</strong> {{ product.price }}</p>
+    <p><strong>Stock:</strong> {{ product.stock }}</p>
+    <button (click)="editProduct.emit(i)">Edit</button>
+    <button (click)="deleteProduct.emit(i)">Delete</button>
+  </div>
+</div>
