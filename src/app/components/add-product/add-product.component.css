@@ -101,3 +101,21 @@
   label{
     color: #ffffff;
   }
+
+  .logout-btn {
+    background: rgb(0, 0, 0);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .logout-btn:hover {
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #ddd;
+  }
+  

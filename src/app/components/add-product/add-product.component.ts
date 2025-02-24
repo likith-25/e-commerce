@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProductFormComponent } from '../product-form/product-form.component';
-import { ProductListComponent } from '../product-list/product-list.component';
-import { ViewProductComponent } from '../view-product/view-product.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductFormComponent, ProductListComponent, ViewProductComponent],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
@@ -16,9 +14,10 @@ export class AddProductComponent {
   products: any[] = [];
   newProduct: any = { id: 0, name: '', description: '', type: '', price: 0, stock: 0 };
   isEditing = false;
+  isFormOpen = false;
   viewMode: 'table' | 'card' = 'table';
 
-  constructor() {
+  constructor(private router: Router) {
     this.loadProducts();
   }
 
@@ -26,12 +25,22 @@ export class AddProductComponent {
     this.products = JSON.parse(localStorage.getItem('products') || '[]');
   }
 
-  resetForm() {
+  openForm() {
     this.isEditing = false;
+    this.isFormOpen = true;
     this.newProduct = { id: 0, name: '', description: '', type: '', price: 0, stock: 0 };
   }
 
+  closeForm() {
+    this.isFormOpen = false;
+  }
+
   addProduct() {
+    if (this.newProduct.name.trim() === '' || this.newProduct.price <= 0) {
+      alert("Please enter valid product details.");
+      return;
+    }
+
     if (this.isEditing) {
       const index = this.products.findIndex(p => p.id === this.newProduct.id);
       this.products[index] = { ...this.newProduct };
@@ -40,13 +49,15 @@ export class AddProductComponent {
       this.newProduct.id = new Date().getTime();
       this.products.push({ ...this.newProduct });
     }
+
     localStorage.setItem('products', JSON.stringify(this.products));
-    this.resetForm();
+    this.closeForm();
   }
 
   editProduct(index: number) {
     this.newProduct = { ...this.products[index] };
     this.isEditing = true;
+    this.isFormOpen = true;
   }
 
   deleteProduct(index: number) {
@@ -58,5 +69,14 @@ export class AddProductComponent {
 
   toggleView(view: 'table' | 'card') {
     this.viewMode = view;
+  }
+
+  navigateToViewProduct(productId: number) {
+    this.router.navigate(['/view-product', productId]);
+  }
+
+  logout() {
+    localStorage.removeItem('authToken'); 
+    this.router.navigate(['/login']);
   }
 }

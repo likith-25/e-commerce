@@ -1,75 +1,79 @@
 <div class="container">
-    <h2>Admin - Product Management</h2>
+  <h2>Admin - Product Management</h2>
 
-    <button class="add-btn" (click)="resetForm()">+ Add Product</button>
-    <button class="add-btn" (click)="resetForm()">View Product</button>
+  <button class="add-btn" (click)="openForm()">+ Add Product</button>
 
-    <div class="form-container">
-      <h3>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h3>
-  
-      <label>Product Name:</label>
-      <input type="text" [(ngModel)]="newProduct.name" name="name" required />
-  
-      <label>Description:</label>
-      <input type="text" [(ngModel)]="newProduct.description" name="description" />
-  
-      <label>Type:</label>
-      <input type="text" [(ngModel)]="newProduct.type" name="type" />
-  
-      <label>Price (₹):</label>
-      <input type="number" [(ngModel)]="newProduct.price" name="price" required min="0" />
-  
-      <label>Stock:</label>
-      <input type="number" [(ngModel)]="newProduct.stock" name="stock" required min="0" />
-  
-      <button (click)="addProduct()">{{ isEditing ? 'Update Product' : 'Add Product' }}</button>
-    </div>
+  <div class="form-container" *ngIf="isFormOpen">
+    <h3>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h3>
 
-    <div class="toggle-view">
-      <button (click)="toggleView('table')" [class.active]="viewMode === 'table'">Table View</button>
-      <button (click)="toggleView('card')" [class.active]="viewMode === 'card'">Card View</button>
-    </div>
+    <label>Product Name:</label>
+    <input type="text" [(ngModel)]="newProduct.name" required />
 
-    <div *ngIf="viewMode === 'table'">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of products; let i = index">
-            <td>{{ product.name }}</td>
-            <td>{{ product.description }}</td>
-            <td>{{ product.type }}</td>
-            <td>₹{{ product.price }}</td>
-            <td>{{ product.stock }}</td>
-            <td>
-              <button class="edit-btn" (click)="editProduct(i)">Edit</button>
-              <button class="delete-btn" (click)="deleteProduct(i)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <label>Description:</label>
+    <input type="text" [(ngModel)]="newProduct.description" />
 
-    <div *ngIf="viewMode === 'card'" class="card-container">
-      <div *ngFor="let product of products; let i = index" class="product-card">
-        <h3><strong>Product Name:</strong>{{ product.name }}</h3>
-        <p><strong>Description:</strong>{{ product.description }}</p>
-        <p><strong>Type:</strong> {{ product.type }}</p>
-        <p><strong>Price:</strong> ₹{{ product.price }}</p>
-        <p><strong>Stock:</strong> {{ product.stock }}</p>
-        <div class="card-actions">
-          <button class="edit-btn" (click)="editProduct(i)">Edit</button>
-          <button class="delete-btn" (click)="deleteProduct(i)">Delete</button>
-        </div>
+    <label>Type:</label>
+    <input type="text" [(ngModel)]="newProduct.type" />
+
+    <label>Price (₹):</label>
+    <input type="number" [(ngModel)]="newProduct.price" required min="0" />
+
+    <label>Stock:</label>
+    <input type="number" [(ngModel)]="newProduct.stock" required min="0" />
+
+    <button (click)="addProduct()">
+      {{ isEditing ? 'Update Product' : 'Add Product' }}
+    </button>
+    <button class="cancel-btn" (click)="closeForm()">Cancel</button>
+  </div>
+
+  <div class="toggle-view">
+    <button (click)="toggleView('table')" [class.active]="viewMode === 'table'">Table View</button>
+    <button (click)="toggleView('card')" [class.active]="viewMode === 'card'">Card View</button>
+  </div>
+
+  <div *ngIf="viewMode === 'table'">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; let i = index">
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.type }}</td>
+          <td>₹{{ product.price }}</td>
+          <td>{{ product.stock }}</td>
+          <td>
+            <button class="edit-btn" (click)="editProduct(i)">Edit</button>
+            <button class="delete-btn" (click)="deleteProduct(i)">Delete</button>
+            <button class="view-btn" (click)="navigateToViewProduct(product.id)">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="viewMode === 'card'" class="card-container">
+    <div *ngFor="let product of products; let i = index" class="product-card">
+      <h3><strong>Product Name:</strong> {{ product.name }}</h3>
+      <p><strong>Description:</strong> {{ product.description }}</p>
+      <p><strong>Type:</strong> {{ product.type }}</p>
+      <p><strong>Price:</strong> ₹{{ product.price }}</p>
+      <p><strong>Stock:</strong> {{ product.stock }}</p>
+      <div class="card-actions">
+        <button class="edit-btn" (click)="editProduct(i)">Edit</button>
+        <button class="delete-btn" (click)="deleteProduct(i)">Delete</button>
+        <button class="view-btn" (click)="navigateToViewProduct(product.id)">View</button>
       </div>
     </div>
   </div>
-  
+</div>
+<button class="logout-btn" (click)="logout()">Logout</button>
