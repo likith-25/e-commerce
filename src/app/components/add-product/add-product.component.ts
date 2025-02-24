@@ -1,28 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { addProduct, editProduct, deleteProduct } from '../../store/product.actions';
+import { Product } from '../../store/product.model';
+import { selectAllProducts } from '../../store/product.selectors';
+import { ProductState } from '../../store/product.reducer';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, FormsModule,],
+  imports: [CommonModule, FormsModule],
   templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent {
-  products: any[] = [];
-  newProduct: any = { id: 0, name: '', description: '', type: '', price: 0, stock: 0 };
+  store = inject(Store<{ product: ProductState }>);
+  products: Product[] = [];
+  newProduct: Product = { id: 0, name: '', description: '', type: '', price: 0, stock: 0 };
   isEditing = false;
   isFormOpen = false;
   viewMode: 'table' | 'card' = 'table';
 
   constructor(private router: Router) {
-    this.loadProducts();
-  }
-
-  loadProducts() {
-    this.products = JSON.parse(localStorage.getItem('products') || '[]');
+    this.store.select(selectAllProducts).subscribe(products => {
+      this.products = products;
+    });
   }
 
   openForm() {
@@ -36,34 +40,31 @@ export class AddProductComponent {
   }
 
   addProduct() {
-    if (this.newProduct.name.trim() === '' || this.newProduct.price <= 0) {
-      alert("Please enter valid product details.");
+    if (!this.newProduct.name.trim() || this.newProduct.price <= 0) {
+      alert('Please enter valid product details.');
       return;
     }
 
     if (this.isEditing) {
-      const index = this.products.findIndex(p => p.id === this.newProduct.id);
-      this.products[index] = { ...this.newProduct };
+      this.store.dispatch(editProduct({ product: this.newProduct }));
       this.isEditing = false;
     } else {
       this.newProduct.id = new Date().getTime();
-      this.products.push({ ...this.newProduct });
+      this.store.dispatch(addProduct({ product: this.newProduct }));
     }
 
-    localStorage.setItem('products', JSON.stringify(this.products));
     this.closeForm();
   }
 
-  editProduct(index: number) {
-    this.newProduct = { ...this.products[index] };
+  editProduct(product: Product) {
+    this.newProduct = { ...product };
     this.isEditing = true;
     this.isFormOpen = true;
   }
 
-  deleteProduct(index: number) {
+  deleteProduct(id: number) {
     if (confirm('Are you sure you want to delete this product?')) {
-      this.products.splice(index, 1);
-      localStorage.setItem('products', JSON.stringify(this.products));
+      this.store.dispatch(deleteProduct({ id }));
     }
   }
 
@@ -76,7 +77,7 @@ export class AddProductComponent {
   }
 
   logout() {
-    localStorage.removeItem('authToken'); 
+    localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }
 }
