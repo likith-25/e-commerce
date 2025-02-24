@@ -11,12 +11,17 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username = 'admin';
+  username = 'admin'; 
   password = 'password';
 
   constructor(private router: Router) {}
 
   login() {
+    if (!this.username.trim() || !this.password.trim()) {
+      alert('Please enter both username and password.');
+      return;
+    }
+
     if (this.username === 'admin' && this.password === 'password') {
       localStorage.setItem('isLoggedIn', 'true');
       this.router.navigate(['/add-product']);
