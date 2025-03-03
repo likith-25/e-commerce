@@ -6,19 +6,27 @@ export interface ProductState {
   products: Product[];
 }
 
-const initialState: ProductState = {
-  products: []
-};
+const initialState: ProductState = { products: [] };
+
+function saveToLocalStorage(state: ProductState) {
+  localStorage.setItem('productState', JSON.stringify(state));
+}
 
 export const productReducer = createReducer(
   initialState,
-  on(addProduct, (state, { product }) => ({
-    products: [...state.products, product]
-  })),
-  on(editProduct, (state, { product }) => ({
-    products: state.products.map(p => (p.id === product.id ? product : p))
-  })),
-  on(deleteProduct, (state, { id }) => ({
-    products: state.products.filter(p => p.id !== id)
-  }))
+  on(addProduct, (state, { product }) => {
+    const newState = { products: [...state.products, product] };
+    saveToLocalStorage(newState);
+    return newState;
+  }),
+  on(editProduct, (state, { product }) => {
+    const newState = { products: state.products.map(p => (p.id === product.id ? product : p)) };
+    saveToLocalStorage(newState);
+    return newState;
+  }),
+  on(deleteProduct, (state, { id }) => {
+    const newState = { products: state.products.filter(p => p.id !== id) };
+    saveToLocalStorage(newState); 
+    return newState;
+  })
 );

@@ -1,121 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  font-family: "Roboto Condensed", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  background-color: #08325c;
+}
+
+header {
+  background-color: #0000ff;
+  color: #ffffff;
+  margin: -8px -16px;
+  padding: 1px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Roboto Condensed", serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .add-btn {
-    background-color: #000000;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .form-container {
-    border: 1px solid #ddd;
-    padding: 50px;
-    margin-bottom: 20px;
-    text-align: left;
-    border-radius: 20px;
-    background-color: #000000;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    background-color: #000000;
-    color: #ffffff;
-  }
-  
-  button {
-    color: #ffffff;
-    background-color: #000000;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-    border: 1px solid #ddd;
-  }
-  
-  .toggle-view {
-    margin-bottom: 15px;
-  }
-  
-  .toggle-view button {
-    margin-right: 5px;
-  }
-  
-  .toggle-view .active {
-    background-color: #ffffff;
-    color: #000000;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-  }
-  
-  .edit-btn {
-    background-color: #000000;
-  }
-  
-  .delete-btn {
-    background-color: #000000;
-    color: white;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    color: #ffffff;
-    background-color: #000000;
-  }
-  
-  .product-card {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin: 10px;
-    width: 200px;
-  }
-  
-  .card-actions button {
-    display: block;
-    width: 100%;
-    margin-top: 5px;
-  }
-  
-  h3{
-    color: #ffffff;
-  }
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
 
-  label{
-    color: #ffffff;
-  }
+.add-btn {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: "Roboto Condensed", serif;
+}
 
-  .logout-btn {
-    background: rgb(0, 0, 0);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-  }
-  
-  .logout-btn:hover {
-    background: #ffffff;
-    color: #000000;
-    border: 1px solid #ddd;
-  }
-  
+.form-container {
+  border: 1px solid #ddd;
+  padding: 50px;
+  margin-bottom: 20px;
+  text-align: left;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 2px solid #0000ff;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 2px solid #0000ff;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+button {
+  color: #ffffff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  font-family: "Roboto Condensed", serif;
+}
+
+.toggle-view {
+  margin-bottom: 15px;
+}
+
+.toggle-view button {
+  margin-right: 5px;
+}
+
+.toggle-view .active {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.actions {
+  border: 1px solid white;
+}
+
+.edit-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.delete-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.view-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px;
+  width: 200px;
+}
+
+.card-actions button {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+}
+
+h3 {
+  color: #000000;
+}
+
+label {
+  color: #000000;
+}
+
+.logout-btn {
+  background: rgb(0, 0, 0);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+}
+
+.logout-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ddd;
+}

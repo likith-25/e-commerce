@@ -1,8 +1,16 @@
+<body>
+  <header>
+    <h2>Admin - Product Management</h2>
+    <div class="header">
+    <button class="add-btn" (click)="openForm()">
+      <img src="assets/icons8-add-product-66.png" width="30px" height="30px">
+      <button class="add-btn" (click)="logout()">
+        <img src="assets/icons8-logout-48.png" width="30px" height="30px">
+      </button>
+    </button>
+  </div>
+  </header>
 <div class="container">
-  <h2>Admin - Product Management</h2>
-
-  <button class="add-btn" (click)="openForm()">+ Add Product</button>
-
   <div class="form-container" *ngIf="isFormOpen">
     <h3>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h3>
 
@@ -10,10 +18,10 @@
     <input type="text" [(ngModel)]="newProduct.name" required />
 
     <label>Description:</label>
-    <input type="text" [(ngModel)]="newProduct.description" />
+    <input type="text" [(ngModel)]="newProduct.description"/>
 
     <label>Type:</label>
-    <input type="text" [(ngModel)]="newProduct.type" />
+    <input type="text" [(ngModel)]="newProduct.type"/>
 
     <label>Price (₹):</label>
     <input type="number" [(ngModel)]="newProduct.price" required min="0" />
@@ -52,9 +60,15 @@
           <td>₹{{ product.price }}</td>
           <td>{{ product.stock }}</td>
           <td>
-            <button class="edit-btn" (click)="editProduct(i)">Edit</button>
-            <button class="delete-btn" (click)="deleteProduct(i)">Delete</button>
-            <button class="view-btn" (click)="navigateToViewProduct(product.id)">View</button>
+            <button class="edit-btn" (click)="editProduct(product)">
+              <img src="assets/icons8-edit-24.png" width="20px" height="20px">
+            </button>
+            <button class="delete-btn" (click)="deleteProduct(product.id)">
+              <img src="assets/icons8-delete-30.png" width="20px" height="20px">
+            </button>
+            <button class="view-btn" (click)="navigateToViewProduct(product.id)">
+              <img src="assets/icons8-view-30.png" width="20px" height="20px">              
+            </button>
           </td>
         </tr>
       </tbody>
@@ -69,11 +83,17 @@
       <p><strong>Price:</strong> ₹{{ product.price }}</p>
       <p><strong>Stock:</strong> {{ product.stock }}</p>
       <div class="card-actions">
-        <button class="edit-btn" (click)="editProduct(i)">Edit</button>
-        <button class="delete-btn" (click)="deleteProduct(i)">Delete</button>
-        <button class="view-btn" (click)="navigateToViewProduct(product.id)">View</button>
+        <button class="edit-btn" (click)="editProduct(product)">
+          <img src="assets/icons8-edit-24.png" width="20px" height="20px">
+        </button>
+        <button class="delete-btn" (click)="deleteProduct(product.id)">
+          <img src="assets/icons8-delete-30.png" width="20px" height="20px">
+        </button>
+        <button class="view-btn" (click)="navigateToViewProduct(product.id)">
+          <img src="assets/icons8-view-30.png" width="20px" height="20px">              
+        </button>
       </div>
     </div>
   </div>
 </div>
-<button class="logout-btn" (click)="logout()">Logout</button>
+</body>

@@ -21,8 +21,9 @@ export class ViewProductComponent {
     const productId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.store.select(selectAllProducts).subscribe(products => {
+      console.log('Fetched products:', products);
       this.product = products.find(p => p.id === productId);
-    });
+    });    
   }
 
   goBack() {

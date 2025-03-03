@@ -25,6 +25,7 @@ export class AddProductComponent {
 
   constructor(private router: Router) {
     this.store.select(selectAllProducts).subscribe(products => {
+      console.log('Products in Store:', products);
       this.products = products;
     });
   }
@@ -57,16 +58,17 @@ export class AddProductComponent {
   }
 
   editProduct(product: Product) {
-    this.newProduct = { ...product };
+    this.newProduct = { ...product }; 
     this.isEditing = true;
     this.isFormOpen = true;
   }
-
+  
   deleteProduct(id: number) {
+    console.log('Deleting product with ID:', id); 
     if (confirm('Are you sure you want to delete this product?')) {
       this.store.dispatch(deleteProduct({ id }));
     }
-  }
+  }  
 
   toggleView(view: 'table' | 'card') {
     this.viewMode = view;

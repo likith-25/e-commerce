@@ -1,9 +1,9 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { ProductState } from './product.reducer';
 
-export const selectProductState = createFeatureSelector<ProductState>('productState');
+export const selectProductState = createFeatureSelector<ProductState>('product');
 
 export const selectAllProducts = createSelector(
   selectProductState,
-  (state) => state.products
+  (state: ProductState) => state.products
 );
