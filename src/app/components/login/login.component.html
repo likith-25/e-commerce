@@ -1,15 +1,18 @@
 <body>
-<header>
+  <header>
     <img src="assets/cart-icon-removebg-preview.png" width="50px" height="50px">
     <h2>Admin - Product Management Login</h2>
-</header>
-    <form (ngSubmit)="login()">
-      <label>Username:</label>
-      <input type="text" [(ngModel)]="username" name="username" required />
-    
-      <label>Password:</label>
-      <input type="password" [(ngModel)]="password" name="password" required />
-    
-      <button type="submit">Login</button>
-    </form>    
+  </header>
+
+  <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+    <label>Username:</label>
+    <input type="text" name="username" [(ngModel)]="username" required #usernameField="ngModel" />
+    <div *ngIf="usernameField.invalid && usernameField.touched" class="error">Username is required.</div>
+
+    <label>Password:</label>
+    <input type="password" name="password" [(ngModel)]="password" required #passwordField="ngModel" />
+    <div *ngIf="passwordField.invalid && passwordField.touched" class="error">Password is required.</div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>    
 </body>

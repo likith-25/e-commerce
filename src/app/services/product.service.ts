@@ -6,24 +6,39 @@ import { Product } from '../store/product.model';
   providedIn: 'root',
 })
 export class ProductService {
-  private products: Product[] = [];
+  private localStorageKey = 'productState';
 
   constructor() {}
 
+  private getProducts(): Product[] {
+    const data = localStorage.getItem(this.localStorageKey);
+    return data ? JSON.parse(data).products : [];
+  }
+
+  private saveProducts(products: Product[]): void {
+    localStorage.setItem(this.localStorageKey, JSON.stringify({ products }));
+  }
+
   addProduct(product: Product): Observable<Product> {
-    this.products.push(product);
+    const products = this.getProducts();
+    products.push(product);
+    this.saveProducts(products);
     return of(product);
   }
 
   editProduct(updatedProduct: Product): Observable<Product> {
-    this.products = this.products.map((p) =>
+    let products = this.getProducts();
+    products = products.map((p) =>
       p.id === updatedProduct.id ? updatedProduct : p
     );
+    this.saveProducts(products);
     return of(updatedProduct);
   }
 
   deleteProduct(id: number): Observable<void> {
-    this.products = this.products.filter((p) => p.id !== id);
+    let products = this.getProducts();
+    products = products.filter((p) => p.id !== id);
+    this.saveProducts(products);
     return of(undefined);
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, NgForm } from '@angular/forms'; 
 import { CommonModule } from '@angular/common'; 
 
 @Component({
@@ -11,22 +11,20 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username = 'admin'; 
-  password = 'password';
+  username = '';
+  password = '';
 
   constructor(private router: Router) {}
 
-  login() {
-    if (!this.username.trim() || !this.password.trim()) {
-      alert('Please enter both username and password.');
-      return;
-    }
+  onLogin(form: NgForm) {
+    if (form.invalid) return;
 
     if (this.username === 'admin' && this.password === 'password') {
       localStorage.setItem('isLoggedIn', 'true');
       this.router.navigate(['/add-product']);
     } else {
       alert('Invalid Credentials');
+      form.resetForm();
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { addProduct, editProduct, deleteProduct } from '../../store/product.actions';
@@ -40,11 +40,8 @@ export class AddProductComponent {
     this.isFormOpen = false;
   }
 
-  addProduct() {
-    if (!this.newProduct.name.trim() || this.newProduct.price <= 0) {
-      alert('Please enter valid product details.');
-      return;
-    }
+  onSubmit(form: NgForm) {
+    if (form.invalid) return;
 
     if (this.isEditing) {
       this.store.dispatch(editProduct({ product: this.newProduct }));
@@ -55,20 +52,21 @@ export class AddProductComponent {
     }
 
     this.closeForm();
+    form.resetForm();
   }
 
   editProduct(product: Product) {
-    this.newProduct = { ...product }; 
+    this.newProduct = { ...product };
     this.isEditing = true;
     this.isFormOpen = true;
   }
-  
+
   deleteProduct(id: number) {
-    console.log('Deleting product with ID:', id); 
+    console.log('Deleting product with ID:', id);
     if (confirm('Are you sure you want to delete this product?')) {
       this.store.dispatch(deleteProduct({ id }));
     }
-  }  
+  }
 
   toggleView(view: 'table' | 'card') {
     this.viewMode = view;
